@@ -1,0 +1,37 @@
+Build a full-stack web app called SolapurRoads — a community road condition reporting platform for Solapur city, India.
+
+TECH STACK:
+- Frontend: React + Vite + Tailwind CSS + Leaflet.js + Framer Motion + React Router
+- Backend: Node.js + Express + Supabase (PostgreSQL + Storage) + JWT auth + Multer uploads
+
+PAGES:
+1. / (Home) — Hero, stats, how it works, CTA
+2. /map — Full-screen Leaflet heat map of Solapur (center: 17.6868, 75.9148). Heat map colors: red=dangerous, yellow=medium, green=good. Filter buttons by condition. Popup shows photo/video + details on click.
+3. /report (auth required) — Upload photo OR video, pick condition (good/medium/poor/dangerous), click map to set location, GPS button, area name + description field. Submit creates a report and awards +10 points.
+4. /leaderboard — Ranked table with podium top 3. Filter by weekly/monthly/all-time. Show badge (Bronze/Silver/Gold/Diamond). Animated rows.
+5. /profile/:id — User avatar, stats (reports, points, badge), grid of their submitted reports with thumbnails.
+6. /login and /signup — Dark themed auth forms with JWT.
+
+BACKEND API ROUTES:
+- POST /api/auth/register { name, email, password } → JWT token
+- POST /api/auth/login { email, password } → JWT token
+- GET /api/auth/me → current user
+- GET /api/reports?condition=&limit= → all reports with lat/lng for heatmap
+- POST /api/reports (multipart) → create report, upload media to Supabase Storage, award points
+- GET /api/leaderboard?period=all_time|weekly|monthly
+- GET /api/users/:id → profile + reports
+
+DATABASE (Supabase):
+- users: id, name, email, password_hash, avatar_url, total_points, reports_count, created_at
+- reports: id, user_id, lat, lng, area_name, condition (good/medium/poor/dangerous), description, media_url, media_type, upvotes, created_at
+- leaderboard_cache: user_id, weekly_points, monthly_points, all_time_points
+
+DESIGN:
+- Dark theme (#0A0A0B background) with orange accent (#F97316)
+- Font: Plus Jakarta Sans
+- Mobile-first responsive
+- Toast notifications for actions
+- Smooth Framer Motion page animations
+- Map uses CartoDB Dark tiles
+
+Generate all files with complete working code.
